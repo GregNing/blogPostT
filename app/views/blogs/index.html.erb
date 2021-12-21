@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+<h1>Blogs</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Author</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @blogs.each do |blog| %>
+      <tr>
+        <td><%= blog.id %></td>
+        <td><%= blog.name %></td>
+        <td><%= blog.user_name %></td>
+        <td>
+          <%= link_to 'Show', blog, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_blog_path(blog), class: 'btn btn-primary' %>
+          <%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
+          <%= link_to 'Link to Article', blog_articles_path(blog), class: 'btn btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Blog', new_blog_path %>

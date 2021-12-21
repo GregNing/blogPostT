@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  resources :blogs do
+    resources :articles do
+      member do
+        post :publish
+        post :hide
+      end
+    end
+  end
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -10,6 +19,5 @@ Rails.application.routes.draw do
     get 'reset_password', to: 'users/passwords#edit'
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  get "welcome/index"
-  root to: "welcome#index"
+  root to: "blogs#index"
 end

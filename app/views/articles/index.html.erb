@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+<h1>Articles</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @articles.each do |article| %>
+      <% if article.published? || can_actions?(article) %>
+        <tr>
+          <td><%= article.id %></td>
+          <td><%= article.title %></td>
+          <td><%= article.content %></td>
+          <% if can_actions?(article) %>
+            <td>
+              <%= link_to 'Show', blog_article_path(@blog, article), class: 'btn btn-primary' %>
+              <%= link_to 'Edit', edit_blog_article_path(@blog, article), class: 'btn btn-primary' %>
+              <%= link_to 'Destroy', blog_article_path(@blog, article), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
+              <% if article.hidden? %>
+              <%= link_to("Publish", publish_blog_article_path(@blog, article) , method: :post, :class => "btn btn-xs btn-success") %>
+              <% else %>
+               <%= link_to("Hide", hide_blog_article_path(@blog, article), method: :post,  :class => "btn btn-xs btn-warning") %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'New Article', new_blog_article_path(params[:blog_id]) %>
+<%= link_to 'Go to Blog', blogs_path %>
